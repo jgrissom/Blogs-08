@@ -26,4 +26,9 @@ public class HomeController(DataContext db) : Controller
     }
     return View();
   }
+  public IActionResult DeleteBlog(int id)
+  {
+    _dataContext.DeleteBlog(_dataContext.Blogs.FirstOrDefault(b => b.BlogId == id));
+    return RedirectToAction("Index");
+  }
 }
