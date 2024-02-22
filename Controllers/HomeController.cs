@@ -36,4 +36,23 @@ public class HomeController(DataContext db) : Controller
     blog = _dataContext.Blogs.FirstOrDefault(b => b.BlogId == id),
     Posts = _dataContext.Posts.Where(p => p.BlogId == id)
   });
+  public IActionResult AddPost(int id)
+  {
+    ViewBag.BlogId = id;
+    return View(new Post());
+  }
+
+  [HttpPost]
+  [ValidateAntiForgeryToken]
+  public IActionResult AddPost(int id, Post post)
+  {
+    post.BlogId = id;
+    if (ModelState.IsValid)
+    {
+      _dataContext.AddPost(post);
+      return RedirectToAction("BlogDetail", new { id = id });
+    }
+    @ViewBag.BlogId = id;
+    return View();
+  }
 }
