@@ -14,12 +14,16 @@ public class HomeController(DataContext db) : Controller
   {
     if (ModelState.IsValid)
     {
-      _dataContext.AddBlog(model);
-      return RedirectToAction("Index");
+      if (_dataContext.Blogs.Any(b => b.Name == model.Name))
+      {
+        ModelState.AddModelError("", "Name must be unique");
+      }
+      else
+      {
+        _dataContext.AddBlog(model);
+        return RedirectToAction("Index");
+      }
     }
-    else
-    {
-      return View();
-    }
+    return View();
   }
 }
