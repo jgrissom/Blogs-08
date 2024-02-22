@@ -7,4 +7,5 @@ public class HomeController(DataContext db) : Controller
   private readonly DataContext _dataContext = db;
 
   public IActionResult Index() => View(_dataContext.Blogs.OrderBy(b => b.Name));
+  public IActionResult AddBlog() => View(new Blog());
 }
