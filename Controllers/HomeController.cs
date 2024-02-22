@@ -12,7 +12,14 @@ public class HomeController(DataContext db) : Controller
   [ValidateAntiForgeryToken]
   public IActionResult AddBlog(Blog model)
   {
-    _dataContext.AddBlog(model);
-    return RedirectToAction("Index");
+    if (ModelState.IsValid)
+    {
+      _dataContext.AddBlog(model);
+      return RedirectToAction("Index");
+    }
+    else
+    {
+      return View();
+    }
   }
 }
